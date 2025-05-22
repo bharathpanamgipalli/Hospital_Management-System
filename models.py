@@ -1,0 +1,39 @@
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+
+db = SQLAlchemy()
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(100))
+    role = db.Column(db.String(20))  # admin, doctor, patient
+
+class Patient(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    contact = db.Column(db.String(20))
+    history = db.Column(db.Text)
+
+class Appointment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_name = db.Column(db.String(100))
+    doctor_name = db.Column(db.String(100))
+    date = db.Column(db.String(50))
+    time = db.Column(db.String(50))
+
+class Medicine(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    quantity = db.Column(db.Integer)
+
+class DoctorSchedule(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    doctor_name = db.Column(db.String(100))
+    available_days = db.Column(db.String(100))
+    timings = db.Column(db.String(100))
+
+class Doctor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    specialization = db.Column(db.String(100))
